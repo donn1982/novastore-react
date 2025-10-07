@@ -21,4 +21,4 @@ services:
     restart: unless-stopped
 volumes:
   jenkins_home:
-  web_content:
+  web_content:
