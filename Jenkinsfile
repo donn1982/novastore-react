@@ -30,7 +30,7 @@ pipeline {
 
         stage('Archive Build Artifacts') {
             steps {
-                archiveArtifacts artifacts: "${BUILD_DIR}//*", fingerprint: true
+                archiveArtifacts artifacts: "${BUILD_DIR}/**/*", fingerprint: true
             }
         }
 
@@ -47,6 +47,6 @@ pipeline {
         }
         failure {
             echo 'Build or Deployment Failed!'
-        }
-    }
+        }
+    }
 }

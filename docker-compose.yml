@@ -9,7 +9,7 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
-      - web_content:/var/www/site
+      - web_content:/var/www/html   # must match Jenkinsfile DEPLOY_DIR
     restart: unless-stopped
   web:
     image: nginx:alpine
@@ -21,4 +21,4 @@ services:
     restart: unless-stopped
 volumes:
   jenkins_home:
-  web_content:
+  web_content:
