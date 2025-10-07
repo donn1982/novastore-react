@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REPO_URL = "https://github.com/<yourusername>/novastore-react.git"
+        REPO_URL = "https://github.com/donn1982/novastore-react.git"
         BUILD_DIR = "build"
         DEPLOY_DIR = "/var/www/html"
     }
