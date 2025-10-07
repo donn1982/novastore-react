@@ -22,31 +22,27 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build React App') {
             steps {
                 sh 'npm run build'
             }
         }
 
-        stage('Archive Build Artifacts') {
-            steps {
-                archiveArtifacts artifacts: "${BUILD_DIR}/**/*", fingerprint: true
-            }
-        }
-
         stage('Deploy to Nginx') {
             steps {
-                sh "cp -r ${BUILD_DIR}/* ${DEPLOY_DIR}/"
+                // Clean old files before deploying new build
+                sh 'rm -rf ${DEPLOY_DIR}/*'
+                sh 'cp -r ${BUILD_DIR}/* ${DEPLOY_DIR}/'
             }
         }
     }
 
     post {
         success {
-            echo 'Build and Deployment Completed Successfully!'
+            echo '✅ React App Built and Deployed Successfully via Jenkins!'
         }
         failure {
-            echo 'Build or Deployment Failed!'
+            echo '❌ Build or Deployment Failed!'
         }
     }
 }
