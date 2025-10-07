@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    // Use NodeJS tool configured in Jenkins (Manage Jenkins → Global Tool Configuration → NodeJS)
+    tools {
+        nodejs "NodeJS 20" // Replace with the exact name you gave your NodeJS installation
+    }
+
     environment {
         REPO_URL = "https://github.com/donn1982/novastore-react.git"
         BUILD_DIR = "build"
@@ -10,35 +15,35 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Fetch code from GitHub
+                echo "Fetching source code from GitHub..."
                 git branch: 'main', url: "${REPO_URL}"
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install npm dependencies
+                echo "Installing npm dependencies..."
                 sh 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                // Build the React app
+                echo "Building React app..."
                 sh 'npm run build'
             }
         }
 
         stage('Archive Build Artifacts') {
             steps {
-                // Archive build folder in Jenkins
+                echo "Archiving build artifacts..."
                 archiveArtifacts artifacts: "${BUILD_DIR}/**/*", fingerprint: true
             }
         }
 
         stage('Deploy to Nginx') {
             steps {
-                // Deploy build folder to /var/www/html (mapped to Nginx)
+                echo "Deploying build to Nginx..."
                 sh "cp -r ${BUILD_DIR}/* ${DEPLOY_DIR}/"
             }
         }
